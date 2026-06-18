@@ -170,8 +170,9 @@ bool oled_task_user(void) {
         word_w += OLED_GLYPH_COLS * scale_x;
     }
 
+#define OLED_Y_OFFSET (-2) // max safe nudge without clipping at current letter height
     uint8_t       x = (OLED_DISPLAY_WIDTH - word_w) / 2;
-    const uint8_t y = (OLED_DISPLAY_HEIGHT - letter_h) / 2;
+    const uint8_t y = (OLED_DISPLAY_HEIGHT - letter_h) / 2 + OLED_Y_OFFSET;
 
     for (uint8_t i = 0; i < letter_count; i++) {
         uint8_t        scale_x = (i < OLED_BOLD_LETTER_COUNT) ? OLED_GLYPH_SCALE_X_BOLD : OLED_GLYPH_SCALE_X_NORMAL;
