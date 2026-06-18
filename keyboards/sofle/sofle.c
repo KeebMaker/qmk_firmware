@@ -52,7 +52,7 @@ oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
     if (is_keyboard_master()) {
         return OLED_ROTATION_270;
     }
-    return rotation;
+    return OLED_ROTATION_180;
 }
 
 static void render_logo(void) {
@@ -98,7 +98,11 @@ void print_status_narrow(void) {
     }
     oled_write_P(PSTR("\n\n"), false);
     led_t led_usb_state = host_keyboard_led_state();
-    oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    if (led_usb_state.caps_lock) {
+        oled_write_ln_P(PSTR("CPSLK"), false);
+    } else {
+        oled_write_ln_P(PSTR(""), false);
+    }
 }
 
 bool oled_task_kb(void) {
